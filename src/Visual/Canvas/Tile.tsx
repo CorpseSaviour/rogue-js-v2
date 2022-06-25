@@ -12,5 +12,15 @@ export const Tile: React.FC<Tile> = ({ content }) => {
     setText(content);
   }, [content]);
 
-  return <div className="flex align-center justify-center;">{text}</div>;
+  return (
+    <div
+      onClick={() => {
+        const element = document.getElementById("gameFocus");
+        element?.focus();
+      }}
+      className="flex align-center justify-center;"
+    >
+      {text}
+    </div>
+  );
 };

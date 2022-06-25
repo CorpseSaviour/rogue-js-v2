@@ -1,5 +1,5 @@
 //LIBRARIES
-import { useEffect, useState, KeyboardEvent, useRef } from "react";
+import { useEffect, useState, KeyboardEvent } from "react";
 import * as Mapper from "./Utils/Mapper";
 
 //INTERFACES
@@ -12,7 +12,7 @@ import { Log } from "./Visual/ActionLog/Log";
 import { ActionLog } from "./Utils/ActionLog";
 
 function App() {
-  const gameFocus = useRef();
+  const [focus, setFocus] = useState(false);
   const [canvas, setCanvas] = useState<Map>();
   const [gameController, setGameController] = useState<GameController>();
   const [ActionsLog, setActionsLog] = useState<ActionLog>();
@@ -39,7 +39,24 @@ function App() {
     setCanvas(gameController?.genCanvas());
   }
   return (
-    <div className="App" ref={gameFocus.current}>
+    <div className="flex w-full h-full items-center justify-center">
+      <input
+        className="absolute -z-10 outline-none"
+        value={""}
+        readOnly
+        id="gameFocus"
+        onBlur={() => {
+          setFocus(false);
+        }}
+        onFocus={() => {
+          setFocus(true);
+        }}
+        onKeyDown={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleInput(e);
+        }}
+      ></input>
       <Canvas Map={canvas} />
       {ActionsLog && <Log props={ActionsLog} />}
     </div>
