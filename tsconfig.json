@@ -18,9 +18,18 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "paths": {
+      "Visual": [
+        "/Visual/"
+      ],
+      "Entities": [
+        "/Entities/"
+      ]
+    }
   },
   "include": [
     "src"
-  ]
+  ],
 }
