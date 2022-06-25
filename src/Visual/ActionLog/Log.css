@@ -1,0 +1,10 @@
+.LogTitle{
+
+}
+.Logs{
+  border: 2px solid purple;
+  height: 200px;
+  max-height: 200px;
+  width: 300px;
+  overflow: auto;
+}
