@@ -11,6 +11,7 @@ export interface EntityInterface {
 }
 
 export interface ActionStatus {
+  Action: string;
   Status: Boolean;
   Layer: number | undefined;
   Reason: {

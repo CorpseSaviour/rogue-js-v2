@@ -8,24 +8,45 @@ export interface ActionLogInterface {
   Action: ActionStatus;
 }
 
-export const LogItem: React.FC<{ props: ActionLogInterface }> = ({ props }) => {
-  const [content, setContent] = useState<ActionLogInterface>(props);
+export const LogItem: React.FC<{ Log: ActionLogInterface }> = ({ Log }) => {
+  const [content, setContent] = useState<ActionLogInterface>(Log);
 
   useEffect(() => {
-    console.log("ActionLog");
-  }, []);
-  useEffect(() => {
-    setContent(props);
-  }, [props]);
+    setContent(Log);
+  }, [Log]);
+
   function formatLog() {
+    if (Log.Action.Action === "Attack") {
+      return formatAttack(Log);
+    } else if (Log.Action.Action === "Move") {
+      return formatMoveFail(Log);
+    } else return "";
     let LogText = "";
-    content.Entity.name === "Player"
-      ? (LogText += "You")
-      : (LogText += content.Entity.name);
-    content.Action.Status === false 
-      ? LogText += " can't move there, " + content.Action.Reason.Entity?.name + " is in the way."
-      : (LogText += "");
-    return LogText;
   }
+
+  function formatMoveFail(Log: ActionLogInterface) {
+    return (
+      "You can't move there, " +
+      content.Action.Reason.Entity?.name +
+      " is in the way."
+    );
+  }
+
+  function formatAttack(Log: ActionLogInterface) {
+    let Attacker = Log.Entity.name;
+    let Target = "" + Log.Action.Reason.Entity?.name;
+    if (Log.Action.Status) {
+      return formatHit(Attacker, Target, "" + Log.Action.Reason.Text);
+    } else {
+      return formatMiss(Attacker, Target);
+    }
+  }
+  function formatHit(Attacker: string, Target: string, Damage: string) {
+    return Attacker + " hits " + Target + " dealing " + Damage + " damage!";
+  }
+  function formatMiss(Attacker: string, Target: string) {
+    return Attacker + " tries to hit " + Target + " but misses...";
+  }
+
   return <div className="LogItem">{formatLog()}</div>;
 };
