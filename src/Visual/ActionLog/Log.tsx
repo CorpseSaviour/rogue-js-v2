@@ -21,7 +21,7 @@ export const Log: React.FC<{ props: ActionLog }> = ({ props }) => {
       <div className="Logs">
         {actionLog &&
           actionLog.ActionLogStorage.map((log, index) => {
-            return <LogItem key={index} props={log} />;
+            return <LogItem key={index} Log={log} />;
           })}
       </div>
     </div>

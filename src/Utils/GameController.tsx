@@ -9,6 +9,7 @@ import { ActionStatus } from "Entities/Entity";
 
 // UTILS
 import * as Mapper from "../Utils/Mapper";
+import { Unit } from "Entities/Unit/Unit";
 
 export interface KeyBindingsInterface {
   ArrowLeft: string;
@@ -33,7 +34,6 @@ export class GameController {
   async InputCapture(event: KeyboardEvent<HTMLInputElement>) {
     let Action = this.KeyBindings[event.code as keyof KeyBindingsInterface];
     let playerAction = await this.PlayerAction(Action);
-    console.log(playerAction);
     if (playerAction?.Status === true) {
       await this.NextTurn(playerAction);
     }
@@ -47,9 +47,18 @@ export class GameController {
     return ActionResult;
   }
   async LogPlayerAction(player: Player, PlayerAction: ActionStatus) {
-    PlayerAction.Status === true
-      ? console.log("good job")
-      : this.ActionLog.insert({ Entity: player, Action: PlayerAction });
+    if (PlayerAction.Action === "Move") {
+      if (PlayerAction.Status === false) {
+        this.ActionLog.insert({ Entity: player, Action: PlayerAction });
+      }
+    } else {
+      this.ActionLog.insert({ Entity: player, Action: PlayerAction });
+    }
+  }
+  LogNPCAction(NPC: Unit, Action: ActionStatus) {
+    if (Action.Action !== "Move") {
+      this.ActionLog.insert({ Entity: NPC, Action });
+    }
   }
   async NextTurn(playerAction: ActionStatus) {
     let Player = this.Map.findPlayer();
@@ -61,7 +70,9 @@ export class GameController {
           if (Player) {
             await NPC.checkAgro(this.Map, Player);
             if (NPC.target !== undefined) {
-              return NPC.MoveTowardsTarget(this.Map);
+              let NPCAction = NPC.MoveTowardsTarget(this.Map);
+              if (NPCAction) this.LogNPCAction(NPC, NPCAction);
+              return NPCAction;
             }
           }
         } else {

@@ -1,17 +1,22 @@
 import { GameBoard } from "Entities/GameBoard/GameBoard";
 import { Player } from "./Player";
-import { Unit, UnitInterface } from "./Unit";
+import { Attributes, Unit, UnitEquipment, UnitInterface } from "./Unit";
 
 export class NPC extends Unit {
   lastAction: string | undefined = undefined;
   target: Unit | undefined = undefined;
   sight: number;
-  constructor(params: UnitInterface, NPC: { sight: number }) {
-    super(params);
+  constructor(
+    unit: UnitInterface,
+    NPC: { sight: number },
+    attributes: Attributes,
+    equipment: UnitEquipment
+  ) {
+    super(unit, attributes, equipment);
     this.sight = NPC.sight;
   }
 
-  async checkAgro(map: GameBoard, player: Player) {
+  checkAgro(map: GameBoard, player: Player) {
     let currentPosition = map.findUnit(this);
     let playerPosition = map.findUnit(player);
     let X = currentPosition.X.valueOf() - playerPosition.X.valueOf();
@@ -21,7 +26,7 @@ export class NPC extends Unit {
       this.target = player;
     }
   }
-  async MoveTowardsTarget(map: GameBoard) {
+  MoveTowardsTarget(map: GameBoard) {
     if (this.target) {
       let current = map.findUnit(this);
       let target = map.findUnit(this.target);
@@ -32,10 +37,10 @@ export class NPC extends Unit {
         ? xAffinity < 0
           ? (Action = "MoveRight")
           : (Action = "MoveLeft")
-        : yAffinity < 0 
-          ? (Action = "MoveDown")
-          : (Action = "MoveUp")
-      return this.Action(Action, map)
+        : yAffinity < 0
+        ? (Action = "MoveDown")
+        : (Action = "MoveUp");
+      return this.Action(Action, map);
     }
   }
   distanceFromTarget(map: GameBoard) {
