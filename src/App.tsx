@@ -1,12 +1,12 @@
 //LIBRARIES
 import { useEffect, useState, KeyboardEvent } from "react";
-import * as Mapper from "./Utils/Mapper";
+import { Mapper }  from "./Utils/Mapper";
 
 //INTERFACES
 
 //COMPONENTS
 import { Canvas, Map } from "./Visual/Canvas/Canvas";
-import { GameController } from "./Utils/GameController";
+import { GameController } from "./GameController";
 import { GameBoard } from "./Entities/GameBoard/GameBoard";
 import { Log } from "./Visual/ActionLog/Log";
 import { ActionLog } from "./Utils/ActionLog";
@@ -27,7 +27,7 @@ function App() {
       let BuiltMap: GameBoard = Mapper.MapFromJSON(mapData.Map);
       console.log("Finished Building Map");
       setCanvas(Mapper.generateCanvas(BuiltMap));
-      let ActionsLog = new ActionLog({ asdw: "" });
+      let ActionsLog = new ActionLog();
       setActionsLog(ActionsLog);
       setGameController(new GameController(BuiltMap, KeyBindings, ActionsLog));
     }

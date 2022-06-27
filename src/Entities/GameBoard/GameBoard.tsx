@@ -32,10 +32,10 @@ export class GameBoard {
     this.Rows[coordinate.Y].Columns[coordinate.X] = new BoardTile(newTile);
   }
 
-  findUnit(Unit: Unit): { X: number; Y: number } {
+  findUnit(ID: number): { X: number; Y: number } {
     for (let y = 0; y < this.mapHeight; y++) {
       for (let x = 0; x < this.mapWidth; x++) {
-        if (this.Rows[y].Columns[x].layer1.entity?.ID === Unit.ID) {
+        if (this.Rows[y].Columns[x].layer1.entity?.ID === ID) {
           return { X: x, Y: y };
         }
       }
@@ -57,6 +57,22 @@ export class GameBoard {
     }
     if (this.Units[index] && unit) {
       this.Units[index] = unit;
+    }
+  }
+
+  killUnit(ID: number) {
+    let UnitPosition = this.findUnit(ID);
+    let UnitTile = this.getTile(UnitPosition);
+    let UnitIndex: number = -1;
+    for (let i = 0; i < this.Units.length; i++) {
+      if (this.Units[i].ID === ID) {
+        UnitIndex = i;
+        break;
+      }
+    }
+    if (UnitIndex > -1) {
+      this.Units.splice(UnitIndex, 1);
+      UnitTile.layer1.entity = undefined;
     }
   }
 }

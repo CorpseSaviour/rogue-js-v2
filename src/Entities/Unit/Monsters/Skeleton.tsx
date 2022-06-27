@@ -1,3 +1,4 @@
+import { GameBoard } from "Entities/GameBoard/GameBoard";
 import Weapon from "Entities/Object/Equipment/Weapon";
 import { NPC } from "../NPC";
 import { UnitEquipment } from "../Unit";
@@ -21,15 +22,16 @@ const Equipment: UnitEquipment = {
 };
 
 export class Skeleton extends NPC {
-  constructor(params: { unitIndex: number }) {
+  constructor(unitIndex: number, GameBoard: GameBoard) {
     super(
       {
         ...Unit,
-        unitIndex: params.unitIndex,
+        unitIndex,
       },
       { sight: 4 },
       Attributes,
-      Equipment
+      Equipment,
+      GameBoard      
     );
   }
 }

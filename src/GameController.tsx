@@ -1,5 +1,5 @@
 import { KeyboardEvent } from "react";
-import { ActionLog } from "./ActionLog";
+import { ActionLog } from "./Utils/ActionLog";
 
 //ENTITIES
 import { GameBoard } from "Entities/GameBoard/GameBoard";
@@ -8,7 +8,7 @@ import { Player } from "Entities/Unit/Player";
 import { ActionStatus } from "Entities/Entity";
 
 // UTILS
-import * as Mapper from "../Utils/Mapper";
+import { Mapper } from "./Utils/Mapper";
 import { Unit } from "Entities/Unit/Unit";
 
 export interface KeyBindingsInterface {

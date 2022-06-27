@@ -1,3 +1,4 @@
+import { GameBoard } from "Entities/GameBoard/GameBoard";
 import Weapon from "Entities/Object/Equipment/Weapon";
 import { Attributes, Unit, UnitEquipment } from "./Unit";
 
@@ -15,22 +16,24 @@ const PlayerUnit = {
   lvl: 1,
 };
 
-const PlayerEquipment: UnitEquipment ={
+const PlayerEquipment: UnitEquipment = {
   weapon: new Weapon({ name: "fists", sprite: "^" }, { min: 1, max: 2 }),
-}
+};
 
 export class Player extends Unit {
   constructor(
-    unit: { unitIndex: number },
-    attributes: Attributes = hardCodedAttributes
+    unitIndex: number,
+    // attributes: Attributes = hardCodedAttributes,
+    GameBoard: GameBoard
   ) {
     super(
       {
         ...PlayerUnit,
-        unitIndex: unit.unitIndex,
+        unitIndex,
       },
-      attributes,
-      PlayerEquipment
+      hardCodedAttributes,
+      PlayerEquipment,
+      GameBoard
     );
   }
 }
