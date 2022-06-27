@@ -39,10 +39,13 @@ export class Unit implements Attributes, UnitInterface, UnitEquipment {
   intelligence: number;
   // Equipment
   weapon: Weapon;
+  //Game Board
+  GameBoard: GameBoard;
   constructor(
     unit: UnitInterface,
     attributes: Attributes,
-    equipment: UnitEquipment
+    equipment: UnitEquipment,
+    GameBoard: GameBoard
   ) {
     // Unit
     this.hp = unit.hp;
@@ -57,6 +60,8 @@ export class Unit implements Attributes, UnitInterface, UnitEquipment {
     this.intelligence = attributes.intelligence;
     //Equipment
     this.weapon = equipment.weapon;
+    //Game Board
+    this.GameBoard = GameBoard;
   }
   logProps() {
     console.log(this);
@@ -79,7 +84,7 @@ export class Unit implements Attributes, UnitInterface, UnitEquipment {
       MoveDown: { X: 0, Y: 1 },
       MoveRight: { X: 1, Y: 0 },
     };
-    let currentCoordinate = GameBoard.findUnit(this);
+    let currentCoordinate = GameBoard.findUnit(this.ID);
     let moveCoordinate = {
       X:
         currentCoordinate.X.valueOf() + moveModifier[Action as keyof Actions].X,
@@ -193,7 +198,7 @@ export class Unit implements Attributes, UnitInterface, UnitEquipment {
   private takeDamage(damage: number) {
     this.hp -= damage;
     if (this.hp < 0) {
-      // TODO, IMPLEMENT DEATH
+      this.GameBoard.killUnit(this.ID);
     }
   }
 }
