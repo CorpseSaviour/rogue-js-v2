@@ -1,6 +1,6 @@
 # Rogue JS
 
-This project is a roguelike(https://en.wikipedia.org/wiki/Roguelike) game made using React!
+This project is a [roguelike](https://en.wikipedia.org/wiki/Roguelike) game made using React!
 It's a hobby project that I've worked and reworked and restarted many many times for practicing programming and general fun
 
 ## Running the "game"
