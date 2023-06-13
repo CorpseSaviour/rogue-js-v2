@@ -5,4 +5,4 @@ It's a hobby project that I've worked and reworked and restarted many many times
 
 ## Running the "game"
 
-As a react project, just run npm start and the project will start itself, the quotes around the word game are meant as a joke, because in the current state it's technically a game but it's bare bones
+As a react project, just run `npm install` and `npm start` and the project will start itself, the quotes around the word game are meant as a joke, because in the current state it's technically a game but it's bare bones
